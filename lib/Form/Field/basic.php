@@ -60,7 +60,7 @@ class Form_Field_basic extends \Form_Field_Line {
 			if($_GET['term'])
 				$this->addCondition($_GET['term']);
 
-			$data = $this->model->getRows(array($model->id_field,$this->model->title_field));
+			$data = $this->model->getRows(array($this->model->id_field,$this->model->title_field));
 
 			echo json_encode($data);
 
