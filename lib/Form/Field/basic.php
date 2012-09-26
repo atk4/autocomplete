@@ -2,25 +2,28 @@
 /* Addon  for converting hasOne field into auto-complete
 */
 namespace autocomplete;
-class Form_Field_basic extends \Form_Field_Line {
-	public $options=array();
+class Form_Field_Basic extends \Form_Field_Line {
+//class Form_Field_Basic extends \Form_Field_Hidden { // TO DO: Should change to hidden later on and remove js->hide() line below
+	
+	public $options=array(); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
+	
+	protected $other_field;
+	
 	function init(){
 		parent::init();
 
-        $l=$this->api->locate('addons',__NAMESPACE__,'location');
+		// add add-on locations to pathfinder
+		$l = $this->api->locate('addons',__NAMESPACE__,'location');
 		$addon_location = $this->api->locate('addons',__NAMESPACE__);
+		$this->api->pathfinder->addLocation($addon_location,array(
+			'js'=>'js'
+		))->setParent($l);
 
-        $f=preg_replace('/_id$/','',$this->short_name);
-
-		$this->other_field = $this->owner->addField('line',$f);
+		// add additional form field
+		if($this->owner->model) $f = $this->owner->model->getField($this->short_name);
+		$caption = $f ? $f->caption() : preg_replace('/_id$/','',$this->short_name);
+		$this->other_field = $this->owner->addField('line',$caption);
 		// $this->js(true)->closest('.atk-form-row')->hide();
-
-
-        $this->api->pathfinder->addLocation($addon_location,array(
-            'js'=>'js'
-        ))->setParent($l);
-
-
 	}
 
 	function mustMatch(){
@@ -42,7 +45,6 @@ class Form_Field_basic extends \Form_Field_Line {
 				->where($this->model->getElement( $this->model->id_field),'like',
 					$this->model->dsql()->getField('id','test'))
 				)->debug();
-
 		*/
 	}
 
@@ -53,7 +55,6 @@ class Form_Field_basic extends \Form_Field_Line {
 
 	function setModel($m){
 		parent::setModel($m);
-
 
 		if($_GET[$this->name]){
 
@@ -69,13 +70,13 @@ class Form_Field_basic extends \Form_Field_Line {
 
 	}
 	function render(){
-        $url=$this->api->url(null,array($this->name=>'ajax'));
+		$url=$this->api->url(null,array($this->name=>'ajax'));
 		if($this->value){ // on add new and insterting allow empty start value
 			$this->model->tryLoad($this->value);
 			$name = $this->model->get('name');
-	        $this->other_field->set($name);
+			$this->other_field->set($name);
 		}
-        $this->other_field->js(true)->_load('autocomplete_univ')->univ()->myautocomplete($url, $this, $this->options);
+		$this->other_field->js(true)->_load('autocomplete_univ')->univ()->myautocomplete($url, $this, $this->options);
 
 		return parent::render();
 	}
