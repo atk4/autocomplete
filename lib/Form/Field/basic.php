@@ -2,8 +2,8 @@
 /* Addon  for converting hasOne field into auto-complete
 */
 namespace autocomplete;
-class Form_Field_Basic extends \Form_Field_Line {
-//class Form_Field_Basic extends \Form_Field_Hidden { // TO DO: Should change to hidden later on and remove js->hide() line below
+class Form_Field_basic extends \Form_Field_Line {
+//class Form_Field_basic extends \Form_Field_Hidden { // TO DO: Should change to hidden later on and remove js->hide() line below
 	
 	public $options=array(); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
 	
