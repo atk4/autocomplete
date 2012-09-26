@@ -10,5 +10,5 @@ $this->hasOne('User')->display(array('form'=>'autocomplete/basic'));
 
 This will replace standard drop-down field with an auto-complete field:
 
-![Screenshot](doc/screenshot.png)
+![Screenshot](https://raw.github.com/atk4/autocomplete/master/doc/screenshot.png)
 
