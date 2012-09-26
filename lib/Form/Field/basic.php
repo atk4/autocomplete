@@ -13,7 +13,7 @@ class Form_Field_basic extends \Form_Field_Line {
         $f=preg_replace('/_id$/','',$this->short_name);
 
 		$this->other_field = $this->owner->addField('line',$f);
-		//$this->js(true)->closest('.atk-form-row')->hide();
+		$this->js(true)->closest('.atk-form-row')->hide();
 
 
         $this->api->pathfinder->addLocation($addon_location,array(
@@ -36,6 +36,11 @@ class Form_Field_basic extends \Form_Field_Line {
 		*/
 	}
 
+	function setOptions($options=array()){
+		$this->options=$options;
+		return $this; //maintain chain
+	}
+
 	function setModel($m){
 		parent::setModel($m);
 
@@ -55,8 +60,11 @@ class Form_Field_basic extends \Form_Field_Line {
 	}
 	function render(){
         $url=$this->api->url(null,array($this->name=>'ajax'));
-		$name = $this->model->load($this->value)->get('name');
-        $this->other_field->set($name);
+		if($this->value){ // on add new and insterting allow empty start value
+			$this->model->tryLoad($this->value);
+			$name = $this->model->get('name');
+	        $this->other_field->set($name);
+		}
         $this->other_field->js(true)->_load('autocomplete_univ')->univ()->myautocomplete($url, $this, $this->options);
 
 		return parent::render();
