@@ -15,6 +15,18 @@ $.each({
 				$( other_field).val( ui.item.id );
 
 				return false;
+			},
+			change: function(event, ui) {
+				var data=$.data(this);//Get plugin data for 'this'
+		        if(data.autocomplete.selectedItem==undefined && "mustMatch" in options) {
+		        	$(other_field).val('');
+		        	q.val('');
+		        	return false;
+		        }
+		        if(data.autocomplete.selectedItem==undefined && !("mustMatch" in options)) {
+		        	$(other_field).val(q.val());
+		        	return false;
+		        }
 			}
 		},options))
 		.data( "autocomplete" )._renderItem = function( ul, item ) {
