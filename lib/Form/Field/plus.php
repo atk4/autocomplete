@@ -9,7 +9,7 @@ class Form_Field_plus extends Form_Field_basic {
 		$bs = $f->afterField()->add('ButtonSet');
 		
 		// Add buttons
-		$bs->add('Button')
+		$bs->add('Button') // open dialog for adding new element
 			->set('+')
 			->js('click',$f->js()->univ()->errorMessage('This should open dialog form for adding new record.'));
 
