@@ -20,9 +20,12 @@ class Form_Field_basic extends \Form_Field_Line {
 		))->setParent($l);
 
 		// add additional form field
-		if($this->owner->model) $f = $this->owner->model->getField($this->short_name);
-		$caption = $f ? $f->caption() : preg_replace('/_id$/','',$this->short_name);
-		$this->other_field = $this->owner->addField('line',$caption);
+		$name = preg_replace('/_id$/','',$this->short_name);
+		$caption = null;
+		if($this->owner->model) {
+			if($f = $this->owner->model->getField($this->short_name)) $caption = $f->caption();
+		}
+		$this->other_field = $this->owner->addField('line',$name,$caption);
 		// $this->js(true)->closest('.atk-form-row')->hide();
 	}
 
