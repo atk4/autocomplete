@@ -2,8 +2,7 @@
 /* Addon  for converting hasOne field into auto-complete
 */
 namespace autocomplete;
-class Form_Field_basic extends \Form_Field_Line {
-//class Form_Field_basic extends \Form_Field_Hidden { // TO DO: Should change to hidden later on and remove js->hide() line below
+class Form_Field_basic extends \Form_Field_Hidden {
 	
 	public $options=array('mustMatch'=>'true'); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
 	
@@ -28,9 +27,7 @@ class Form_Field_basic extends \Form_Field_Line {
 		$this->other_field = $this->owner->addField('line',$name,$caption);
 		
 		// move hidden ID field after other field. Otherwise it breaks :first->child CSS in forms
-		$this->owner->add('Order')->move($this,'after',$this->other_field)->now();
-		
-		// $this->js(true)->closest('.atk-form-row')->hide();
+		$this->js(true)->appendTo($this->other_field->js()->parent());
 	}
 
 	function mustMatch(){
@@ -78,7 +75,7 @@ class Form_Field_basic extends \Form_Field_Line {
 	}
 	function render(){
 		$url=$this->api->url(null,array($this->name=>'ajax'));
-		if($this->value){ // on add new and insterting allow empty start value
+		if($this->value){ // on add new and inserting allow empty start value
 			$this->model->tryLoad($this->value);
 			$name = $this->model->get('name');
 			$this->other_field->set($name);
