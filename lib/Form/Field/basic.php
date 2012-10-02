@@ -5,7 +5,7 @@ namespace autocomplete;
 class Form_Field_basic extends \Form_Field_Line {
 //class Form_Field_basic extends \Form_Field_Hidden { // TO DO: Should change to hidden later on and remove js->hide() line below
 	
-	public $options=array(); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
+	public $options=array('mustMatch'=>'true'); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
 	
 	protected $other_field;
 	
@@ -26,6 +26,10 @@ class Form_Field_basic extends \Form_Field_Line {
 			if($f = $this->owner->model->getField($this->short_name)) $caption = $f->caption();
 		}
 		$this->other_field = $this->owner->addField('line',$name,$caption);
+		
+		// move hidden ID field after other field. Otherwise it breaks :first->child CSS in forms
+		$this->owner->add('Order')->move($this,'after',$this->other_field)->now();
+		
 		// $this->js(true)->closest('.atk-form-row')->hide();
 	}
 
