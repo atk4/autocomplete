@@ -15,8 +15,12 @@ class Form_Field_basic extends \Form_Field_Hidden {
 		$l = $this->api->locate('addons',__NAMESPACE__,'location');
 		$addon_location = $this->api->locate('addons',__NAMESPACE__);
 		$this->api->pathfinder->addLocation($addon_location,array(
-			'js'=>'js'
+			'js'=>'js',
+			'css'=>'templates/css',
 		))->setParent($l);
+		
+		// add add-on CSS stylesheet
+        $this->api->jui->addStaticStylesheet('autocomplete');
 
 		// add additional form field
 		$name = preg_replace('/_id$/','',$this->short_name);

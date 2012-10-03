@@ -19,7 +19,9 @@ class Form_Field_plus extends Form_Field_basic {
 		
 		$bs->add('Button') // show current values
 			->set('?')
-			->js('click',$f->js()->univ()->errorMessage('Current values are:<br>ID: $this->js()->val()<br>Name: $f->js()->val()')); // How I can do this???
+			->js('click',$f->js()->univ()
+				->errorMessage('Current values are:<br>ID: $this->js()->val()<br>Name: $f->js()->val()')
+			); // How I can do this???
 		
 	}
 
