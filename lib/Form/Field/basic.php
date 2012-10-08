@@ -1,14 +1,15 @@
 <?php
-/* Addon  for converting hasOne field into auto-complete
-*/
+/**
+ * Addon  for converting hasOne field into auto-complete
+ */
 namespace autocomplete;
 class Form_Field_basic extends \Form_Field_Hidden {
 	
 	public $options=array('mustMatch'=>true); // you can find all available options here: http://jqueryui.com/demos/autocomplete/
 	
-	public $limit_rows = 20;	// Limits resultset
-	public $min_length = 3;	// Minimum characters you have to enter to make autocomplete ajax call
-	public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.';	// Hint text. If empty/null, then hint will not be shown.
+	public $limit_rows = 20; // Limits resultset
+	public $min_length = 3; // Minimum characters you have to enter to make autocomplete ajax call
+	public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.'; // Hint text. If empty/null, then hint will not be shown.
 	
 	protected $other_field;
 	
@@ -24,8 +25,10 @@ class Form_Field_basic extends \Form_Field_Hidden {
 		))->setParent($l);
 		
 		// add add-on CSS stylesheet
-        $this->api->jui->addStaticStylesheet('autocomplete');
-
+		// addStaticStylesheet doesn't work if parent page have no autocomplete fields, and we open dialog window with autocomplete field.
+		// More info: https://github.com/atk4/autocomplete/issues/4
+		//$this->api->jui->addStaticStylesheet('autocomplete');
+		
 		// add additional form field
 		$name = preg_replace('/_id$/','',$this->short_name);
 		$caption = null;
@@ -83,7 +86,6 @@ class Form_Field_basic extends \Form_Field_Hidden {
 			$data = $this->model->getRows(array($this->model->id_field,$this->model->title_field));
 
 			echo json_encode($data);
-
 			exit;
 		}
 	}
@@ -95,7 +97,10 @@ class Form_Field_basic extends \Form_Field_Hidden {
 			$name = $this->model->get($this->model->title_field);
 			$this->other_field->set($name);
 		}
-		$this->other_field->js(true)->_load('autocomplete_univ')->univ()->myautocomplete($url, $this, $this->options);
+		$this->other_field->js(true)
+			->_load('autocomplete_univ')
+			->_css('autocomplete')
+			->univ()->myautocomplete($url, $this, $this->options);
 
 		return parent::render();
 	}
