@@ -50,7 +50,7 @@ class Form_Field_basic extends \Form_Field_Hidden {
 		return $this;
 	}
 
-	function setNotNull($msg=null){
+	function validateNotNull($msg=null){
 		$this->other_field->validateNotNull($msg);
 		return $this;
 	}
