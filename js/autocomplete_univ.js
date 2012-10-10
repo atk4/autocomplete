@@ -4,7 +4,7 @@ $.each({
 	// http://stackoverflow.com/questions/7315556/jquery-ui-autocomplete-select-event-not-working-with-mouse-click
 	// http://jqueryui.com/demos/autocomplete/#events (check focus and select events)
 
-	myautocomplete: function(data, other_field, options){
+	myautocomplete: function(data, other_field, options, id_field, title_field){
 
 		var q=this.jquery;
 
@@ -14,13 +14,13 @@ $.each({
 				// Imants: fix for item selecting with mouse click
 				var e=event;
 				while(e.originalEvent!==undefined) e=e.originalEvent;
-				if(e.type!='focus') q.val( ui.item.name );
-				
+				if(e.type!='focus') q.val( ui.item[title_field] );
+
 				return false;
 			},
 			select: function( event, ui ) {
-				q.val( ui.item.name );
-				$(other_field).val( ui.item.id );
+				q.val( ui.item[title_field] );
+				$(other_field).val( ui.item[id_field] );
 				
 				return false;
 			},
@@ -37,7 +37,7 @@ $.each({
 		.data( "autocomplete" )._renderItem = function( ul, item ) {
 			return $( "<li></li>" )
 				.data( "item.autocomplete", item )
-				.append( "<a>" + item.name + "</a>" )
+				.append( "<a>" + item[title_field] + "</a>" )
 				.appendTo( ul );
 		};
 
