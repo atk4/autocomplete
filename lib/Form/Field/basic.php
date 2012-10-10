@@ -24,11 +24,6 @@ class Form_Field_basic extends \Form_Field_Hidden {
 			'css'=>'templates/css',
 		))->setParent($l);
 		
-		// add add-on CSS stylesheet
-		// addStaticStylesheet doesn't work if parent page have no autocomplete fields, and we open dialog window with autocomplete field.
-		// More info: https://github.com/atk4/autocomplete/issues/4
-		//$this->api->jui->addStaticStylesheet('autocomplete');
-		
 		// add additional form field
 		$name = preg_replace('/_id$/','',$this->short_name);
 		$caption = null;
@@ -97,12 +92,13 @@ class Form_Field_basic extends \Form_Field_Hidden {
 			$name = $this->model->get($this->model->title_field);
 			$this->other_field->set($name);
 		}
+		
 		$this->other_field->js(true)
 			->_load('autocomplete_univ')
 			->_css('autocomplete')
-			->univ()->myautocomplete($url, $this, $this->options);
+			->univ()->myautocomplete($url, $this, $this->options, $this->model->id_field, $this->model->title_field);
 
 		return parent::render();
 	}
-
+	
 }
