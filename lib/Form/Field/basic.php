@@ -11,7 +11,7 @@ class Form_Field_basic extends \Form_Field_Hidden {
 	public $min_length = 3; // Minimum characters you have to enter to make autocomplete ajax call
 	public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.'; // Hint text. If empty/null, then hint will not be shown.
 	
-	protected $other_field;
+	public $other_field;
 	
 	function init(){
 		parent::init();
