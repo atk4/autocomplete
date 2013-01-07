@@ -27,12 +27,31 @@ $.each({
 			change: function(event, ui) {
 				var data=$.data(this);//Get plugin data for 'this'
 				if(data.autocomplete.selectedItem==undefined) {
+                    if("canAdd" in options) {
+                        return true;
+                    }
 					if("mustMatch" in options) q.val('');
 					$(other_field).val(q.val());
 					
 					return false;
 				}
-			}
+			},
+            response: function(event, ui){
+				if(ui.content.length == 0){
+                    if("canAdd" in options) {
+                        console.log("here");
+                        if (typeof(this.hint) == "undefined"){
+                            this.hint = $(this).closest(".atk-row").find("ins").html();
+                        }
+                        // hint, that you can add new item
+                        $(this).closest(".atk-row").find("ins").html("<div class=\"atk-form-error\"><span class=\"field-error-text\">We could not find requested item. Use '+' to add new record.</span></div>" + this.hint);
+                    }
+				} else {
+                    if (typeof(this.hint) != "undefined"){
+                        $(this).closest(".atk-row").find("ins").html(this.hint);
+                    }
+                }
+            }
 		},options))
 		.data( "autocomplete" )._renderItem = function( ul, item ) {
 			return $( "<li></li>" )
