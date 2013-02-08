@@ -30,7 +30,7 @@ class Form_Field_basic extends \Form_Field_Hidden {
 		if($this->owner->model) {
 			if($f = $this->owner->model->getField($this->short_name)) $caption = $f->caption();
 		}
-		$this->other_field = $this->owner->addField('line',$name,$caption);
+		$this->other_field = $this->owner->addField('Line',$name,$caption);
 		if($this->hint) $this->other_field->setFieldHint(sprintf($this->hint,$this->min_length,$this->limit_rows));
 		
 		// move hidden ID field after other field. Otherwise it breaks :first->child CSS in forms
@@ -77,7 +77,6 @@ class Form_Field_basic extends \Form_Field_Hidden {
 
 			if($_GET['term'])
 				$this->addCondition($_GET['term']);
-
 			$data = $this->model->getRows(array($this->model->id_field,$this->model->title_field));
 
 			echo json_encode($data);
