@@ -34,9 +34,9 @@ $.each({
 				}
 			}
 		},options))
-		.data( "autocomplete" )._renderItem = function( ul, item ) {
+		.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 			return $( "<li></li>" )
-				.data( "item.autocomplete", item )
+				.data( "ui-autocomplete-item", item )
 				.append( "<a>" + item[title_field] + "</a>" )
 				.appendTo( ul );
 		};
