@@ -26,7 +26,7 @@ $.each({
 			},
 			change: function(event, ui) {
 				var data=$.data(this);//Get plugin data for 'this'
-				if(data.autocomplete.selectedItem==undefined) {
+				if(data.uiAutocomplete.selectedItem==undefined) {
 					if("mustMatch" in options) q.val('');
 					$(other_field).val(q.val());
 					
