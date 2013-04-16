@@ -11,6 +11,11 @@
             "email": "spam@agiletoolkit.org"
         }
     ],
+    "source": {
+        "url": "git@github.com:atk4/autocomplete.git",
+        "type": "git",
+        "reference": "origin/master"
+    },
     "require": {
         "atk4/atk4": ">=4.2.5",
         "php": ">=5.3"
