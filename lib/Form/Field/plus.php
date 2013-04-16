@@ -13,7 +13,7 @@ class Form_Field_plus extends Form_Field_basic {
 		// Add buttons
 		$bs->add('Button') // open dialog for adding new element
 			->set('+')
-            ->add('misc/PageInFrame')->bindEvent('click','Add New Record')->set(function($page)use($self){
+            ->add('VirtualPage')->bindEvent('click','Add New Record')->set(function($page)use($self){
                 $form=$page->add('Form');
                 $form->setModel($self->model);
                 if($form->isSubmitted()){
