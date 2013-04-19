@@ -11,7 +11,8 @@ class Form_Field_basic extends \Form_Field_Hidden {
 	public $min_length = 3; // Minimum characters you have to enter to make autocomplete ajax call
 	public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.'; // Hint text. If empty/null, then hint will not be shown.
 	
-	public $other_field;
+    public $other_field;
+    public $caption = null;
 	
 	function init(){
 		parent::init();
@@ -26,7 +27,7 @@ class Form_Field_basic extends \Form_Field_Hidden {
 		
 		// add additional form field
 		$name = preg_replace('/_id$/','',$this->short_name);
-		$caption = null;
+		$caption = $this->caption;
 		if($this->owner->model) {
 			if($f = $this->owner->model->getField($this->short_name)) $caption = $f->caption();
 		}

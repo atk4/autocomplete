@@ -20,12 +20,16 @@ class Form_Field_plus extends Form_Field_basic {
                 $form->hasElement($form->model->title_field)
                     ->js(true)->val($self->other_field->js()->val());
                 if($form->isSubmitted()){
-                    $form->update();
-                    $js=array();
-                    $js[]=$self->js()->closest(".atk-row")->find(".atk-form-error")->detach();
-                    $js[]=$self->js()->val($form->model->id);
-                    $js[]=$self->other_field->js()->val($form->model[$form->model->title_field]);
-                    $form->js(null,$js)->univ()->closeDialog()->execute();
+                    try {
+                        $form->update();
+                        $js=array();
+                        $js[]=$self->js()->closest(".atk-row")->find(".atk-form-error")->detach();
+                        $js[]=$self->js()->val($form->model->id);
+                        $js[]=$self->other_field->js()->val($form->model[$form->model->title_field]);
+                        $form->js(null,$js)->univ()->closeDialog()->execute();
+                    } catch (\Exception_ValidityCheck $e){
+                        $form->displayError($e->getField(), $e->getMessage());
+                    }
                 }
             });
 

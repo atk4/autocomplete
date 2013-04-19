@@ -26,20 +26,21 @@ $.each({
 			},
 			change: function(event, ui) {
 				var data=$.data(this);//Get plugin data for 'this'
-				if(data.autocomplete.selectedItem==undefined) {
-                    if("canAdd" in options) {
-                        return true;
+                if (data.autocomplete){ 
+                    if(data.autocomplete.selectedItem==undefined) {
+                        if("canAdd" in options) {
+                            return true;
+                        }
+                        if("mustMatch" in options) q.val('');
+                        $(other_field).val(q.val());
+                        
+                        return false;
                     }
-					if("mustMatch" in options) q.val('');
-					$(other_field).val(q.val());
-					
-					return false;
-				}
+                }
 			},
             response: function(event, ui){
 				if(ui.content.length == 0){
                     if("canAdd" in options) {
-                        console.log("here");
                         if (typeof(this.hint) == "undefined"){
                             this.hint = $(this).closest(".atk-row").find("ins").html();
                         }
