@@ -17,6 +17,9 @@ class Form_Field_Basic extends \Form_Field_Hidden
 
     // Hint text. If empty/null, then hint will not be shown.
     public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.';
+    
+    // show as hint or placeholder
+    public $hint_show_as = 'placeholder'; // hint|placeholder
 
     // Text input field object
     public $other_field;
@@ -49,7 +52,11 @@ class Form_Field_Basic extends \Form_Field_Hidden
         }
         $this->other_field = $this->owner->addField('line', $name, $caption);
         if ($this->hint) {
-            $this->other_field->setFieldHint(sprintf($this->hint, $this->min_length, $this->limit_rows));
+            if ($this->hint_show_as=='placeholder') {
+                $this->other_field->setAttr('placeholder',sprintf($this->hint, $this->min_length, $this->limit_rows));
+            } elseif($this->hint_show_as=='hint') {
+                $this->other_field->setFieldHint(sprintf($this->hint, $this->min_length, $this->limit_rows));
+            }
         }
 
         // move hidden ID field after other field. Otherwise it breaks :first->child CSS in forms
