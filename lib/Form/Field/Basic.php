@@ -52,10 +52,11 @@ class Form_Field_Basic extends \Form_Field_Hidden
         }
         $this->other_field = $this->owner->addField('line', $name, $caption);
         if ($this->hint) {
+            $text = sprintf($this->hint, $this->min_length, $this->limit_rows);
             if ($this->hint_show_as=='placeholder') {
-                $this->other_field->setAttr('placeholder',sprintf($this->hint, $this->min_length, $this->limit_rows));
+                $this->other_field->setAttr('placeholder', $text);
             } elseif($this->hint_show_as=='hint') {
-                $this->other_field->setFieldHint(sprintf($this->hint, $this->min_length, $this->limit_rows));
+                $this->other_field->setFieldHint($text);
             }
         }
 
