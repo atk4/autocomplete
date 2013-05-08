@@ -126,6 +126,10 @@ class Form_Field_Basic extends \Form_Field_Hidden
 
             $data = $this->model->getRows(array($this->id_field, $this->title_field));
 
+            if (isset($this->hooks['reorder_data'])) {
+                $data = $this->hook('reorder_data',array($data));
+            }
+
             echo json_encode($data);
             exit;
         }
