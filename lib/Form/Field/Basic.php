@@ -111,6 +111,10 @@ class Form_Field_Basic extends \Form_Field_Hidden
         return $this; //maintain chain
     }
 
+    function getData() {
+        return $this->model->getRows(array($this->id_field, $this->title_field));
+    }
+
     function setModel($m, $id_field = null, $title_field = null)
     {
         parent::setModel($m);
@@ -124,11 +128,7 @@ class Form_Field_Basic extends \Form_Field_Hidden
                 $this->addCondition($_GET['term']);
             }
 
-            $data = $this->model->getRows(array($this->id_field, $this->title_field));
-
-            if (isset($this->hooks['reorder_data'])) {
-                $data = $this->hook('reorder_data',array($data));
-            }
+            $data = $this->getData();
 
             echo json_encode($data);
             exit;
