@@ -3,9 +3,9 @@ namespace autocomplete;
 
 class Form_Field_Plus extends Form_Field_Basic
 {
-    function init()
+    function setModel($model)
     {
-        parent::init();
+        parent::setModel($model);
         $self = $this;
 
         $f = $this->other_field;
