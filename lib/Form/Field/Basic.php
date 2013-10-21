@@ -130,6 +130,11 @@ class Form_Field_Basic extends \Form_Field_Hidden
 
             $data = $this->getData();
 
+            foreach ($data as &$row) {
+                //var_dump($row['_id']->__toString()); echo '<hr>';
+                $row[$this->id_field] = (string)$row[$this->id_field];
+            }
+
             echo json_encode($data);
             exit;
         }
