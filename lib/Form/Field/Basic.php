@@ -69,6 +69,11 @@ class Form_Field_Basic extends \Form_Field_Hidden
         }
     }
 
+    function setTitleField($title_field)
+    {
+        $this->title_field = $title_field;
+    }
+
     function setCaption($_caption)
     {
         $this->caption = $this->other_field->caption = $this->api->_($_caption);
