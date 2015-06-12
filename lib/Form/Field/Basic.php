@@ -17,7 +17,7 @@ class Form_Field_Basic extends \Form_Field_Hidden
 
     // Hint text. If empty/null, then hint will not be shown.
     public $hint = 'Please enter at least %s symbols. Search results will be limited to %s records.';
-    
+
     // show as hint or placeholder
     public $hint_show_as = 'placeholder'; // hint|placeholder
 
@@ -27,6 +27,7 @@ class Form_Field_Basic extends \Form_Field_Hidden
     // Model ID field and title field names
     protected $id_field;
     protected $title_field;
+    protected $search_field;
 
 
 
@@ -94,7 +95,7 @@ class Form_Field_Basic extends \Form_Field_Hidden
 
     function addCondition($q)
     {
-        $this->model->addCondition($this->title_field, 'like', '%'.$q.'%'); // add condition
+        $this->model->addCondition($this->search_field ?: $this->title_field, 'like', '%'.$q.'%'); // add condition
         /*
         $this->model->addCondition(
             $this->model->dsql()->orExpr()
